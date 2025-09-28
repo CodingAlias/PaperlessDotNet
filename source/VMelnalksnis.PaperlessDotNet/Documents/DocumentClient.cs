@@ -231,18 +231,21 @@ public sealed class DocumentClient : IDocumentClient
 			task = await _taskClient.Get(id).ConfigureAwait(false);
 		}
 
+#pragma warning disable SA1509
 		return task switch
 		{
 			null => new ImportFailed($"Could not find the import task by the given id {id}"),
 
-			_ when task.RelatedDocument is { } documentId => new DocumentCreated(documentId),
+			_ when task.Status == PaperlessTaskStatus.Failure => new ImportFailed(task.Result),
+
+			{ RelatedDocument: { } documentId } => new DocumentCreated(documentId),
 
 			_ when task.Status == PaperlessTaskStatus.Success => new ImportFailed(
 				$"Task status is {PaperlessTaskStatus.Success.Name}, but document id was not given"),
-			_ when task.Status == PaperlessTaskStatus.Failure => new ImportFailed(task.Result),
 
 			_ => throw new ArgumentOutOfRangeException(nameof(task.Status), task.Status, "Unexpected task result"),
 		};
+#pragma warning restore SA1509
 	}
 
 	/// <inheritdoc />

@@ -80,7 +80,16 @@ public sealed class DocumentClientTests(PaperlessFixture paperlessFixture) : Pap
 		documents.Should().ContainSingle(d => d.Id == id).Which.Should().BeEquivalentTo(document);
 		document.Should().NotBeNull();
 		document.OriginalFileName.Should().Be(documentName);
-		document.Created.ToInstant().Should().Be(documentCreation.Created.Value);
+
+		if (PaperlessVersion < new Version(2, 16))
+		{
+			document.Created.ToInstant().Should().Be(documentCreation.Created.Value);
+		}
+		else
+		{
+			document.Created.Date.Should().Be(documentCreation.Created.Value.InUtc().Date);
+		}
+
 		document.Added.ToInstant().Should().BeInRange(currentTime - Duration.FromSeconds(10), currentTime);
 		document.Modified.ToInstant().Should().BeInRange(currentTime - Duration.FromSeconds(10), currentTime);
 		document.Title.Should().Be(documentCreation.Title);
@@ -163,7 +172,9 @@ public sealed class DocumentClientTests(PaperlessFixture paperlessFixture) : Pap
 			.Should()
 			.HaveCount(results.Length - 1)
 			.And.AllSatisfy(failed =>
-				failed.Result.Should().Be($"{documentName}: Not consuming {documentName}: It is a duplicate of Lorem Ipsum (#{created.Id})."));
+				failed.Result.Should()
+					.Be(
+						$"{documentName}: Not consuming {documentName}: It is a duplicate of Lorem Ipsum (#{created.Id})."));
 
 		await Client.Documents.Delete(created.Id);
 	}

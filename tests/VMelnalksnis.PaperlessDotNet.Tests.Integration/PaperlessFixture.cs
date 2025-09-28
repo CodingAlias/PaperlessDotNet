@@ -41,7 +41,7 @@ public sealed class PaperlessFixture : IAsyncDisposable
 	{
 		const string redis = "redis";
 
-		Name = name;
+		Name = paperlessVersion == name ? name : $"{paperlessVersion} {name}";
 
 		_network = new NetworkBuilder().Build();
 

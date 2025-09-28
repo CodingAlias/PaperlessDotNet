@@ -40,6 +40,7 @@ public class Document
 	public OffsetDateTime Modified { get; set; }
 
 	/// <summary>Gets or sets the datetime when the document was created at.</summary>
+	/// <remarks>Since version 2.16.0, it's only a date and not a datetime.</remarks>
 	public OffsetDateTime Created { get; set; }
 
 	/// <summary>Gets or sets ids of the tags assigned to the document.</summary>
