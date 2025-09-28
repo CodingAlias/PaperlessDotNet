@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 
 using VMelnalksnis.PaperlessDotNet.Correspondents;
 using VMelnalksnis.PaperlessDotNet.Documents;
+using VMelnalksnis.PaperlessDotNet.DocumentTypes;
 using VMelnalksnis.PaperlessDotNet.Tags;
 using VMelnalksnis.PaperlessDotNet.Tasks;
 
@@ -30,4 +31,6 @@ namespace VMelnalksnis.PaperlessDotNet.Serialization;
 [JsonSerializable(typeof(PaginatedList<Tag>))]
 [JsonSerializable(typeof(TagCreation))]
 [JsonSerializable(typeof(DocumentMetadata))]
+[JsonSerializable(typeof(PaginatedList<DocumentType>))]
+[JsonSerializable(typeof(DocumentTypeCreation))]
 internal sealed partial class PaperlessJsonSerializerContext : JsonSerializerContext;

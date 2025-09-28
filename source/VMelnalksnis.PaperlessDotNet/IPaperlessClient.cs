@@ -4,6 +4,7 @@
 
 using VMelnalksnis.PaperlessDotNet.Correspondents;
 using VMelnalksnis.PaperlessDotNet.Documents;
+using VMelnalksnis.PaperlessDotNet.DocumentTypes;
 using VMelnalksnis.PaperlessDotNet.Tags;
 
 namespace VMelnalksnis.PaperlessDotNet;
@@ -11,11 +12,14 @@ namespace VMelnalksnis.PaperlessDotNet;
 /// <summary>All available Paperless APIs.</summary>
 public interface IPaperlessClient
 {
-	/// <summary>Gets the documents API client.</summary>
+	/// <summary>Gets the correspondents API client.</summary>
 	ICorrespondentClient Correspondents { get; }
 
 	/// <summary>Gets the documents API client.</summary>
 	IDocumentClient Documents { get; }
+
+	/// <summary>Gets the document types API client.</summary>
+	IDocumentTypeClient DocumentTypes { get; }
 
 	/// <summary>Gets the tags API client.</summary>
 	ITagClient Tags { get; }

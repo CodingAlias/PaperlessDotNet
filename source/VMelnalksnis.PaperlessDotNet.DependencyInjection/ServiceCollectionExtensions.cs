@@ -16,6 +16,7 @@ using NodaTime;
 
 using VMelnalksnis.PaperlessDotNet.Correspondents;
 using VMelnalksnis.PaperlessDotNet.Documents;
+using VMelnalksnis.PaperlessDotNet.DocumentTypes;
 using VMelnalksnis.PaperlessDotNet.Serialization;
 using VMelnalksnis.PaperlessDotNet.Tags;
 using VMelnalksnis.PaperlessDotNet.Tasks;
@@ -109,6 +110,12 @@ public static class ServiceCollectionExtensions
 				var taskClient = provider.GetRequiredService<ITaskClient>();
 				var paperlessOptions = provider.GetRequiredService<IOptionsMonitor<PaperlessOptions>>();
 				return new(httpClient, options, taskClient, paperlessOptions.CurrentValue.TaskPollingDelay);
+			})
+			.AddScoped<IDocumentTypeClient, DocumentTypeClient>(provider =>
+			{
+				var httpClient = provider.GetRequiredService<IHttpClientFactory>().CreateClient(PaperlessOptions.Name);
+				var options = provider.GetRequiredService<PaperlessJsonSerializerOptions>();
+				return new(httpClient, options);
 			})
 			.AddScoped<ITagClient, TagClient>(provider =>
 			{

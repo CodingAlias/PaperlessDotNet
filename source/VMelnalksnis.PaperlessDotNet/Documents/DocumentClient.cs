@@ -84,7 +84,7 @@ public sealed class DocumentClient : IDocumentClient
 	/// <inheritdoc />
 	public IAsyncEnumerable<Document> Get(
 		Expression<Func<DocumentFilter, bool>> filter,
-		Expression<Func<Document, object>>? orderBy = null,
+		Expression<Func<Document, object?>>? orderBy = null,
 		CancellationToken cancellationToken = default)
 	{
 		return GetAllCore<Document>(Routes.Documents.Uri(filter.GetQueryString(orderBy)), cancellationToken);
@@ -93,7 +93,7 @@ public sealed class DocumentClient : IDocumentClient
 	/// <inheritdoc />
 	public async IAsyncEnumerable<Document<TFields>> Get<TFields>(
 		Expression<Func<DocumentFilter, bool>> filter,
-		Expression<Func<Document, object>>? orderBy = null,
+		Expression<Func<Document, object?>>? orderBy = null,
 		[EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
 		if (_paperlessOptions.CustomFields.Count is 0)

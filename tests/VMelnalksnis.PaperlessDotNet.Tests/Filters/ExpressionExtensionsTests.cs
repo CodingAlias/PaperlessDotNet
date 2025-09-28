@@ -16,7 +16,7 @@ public class ExpressionExtensionsTests
 	[ClassData(typeof(FilterExpressionTestCases))]
 	public void GetQueryString(
 		Expression<Func<DocumentFilter, bool>> filter,
-		Expression<Func<Document, object>>? ordering,
+		Expression<Func<Document, object?>>? ordering,
 		string query)
 	{
 		filter.GetQueryString(ordering).Should().Be(query);

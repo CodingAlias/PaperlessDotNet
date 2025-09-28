@@ -8,8 +8,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-using VMelnalksnis.PaperlessDotNet.Filters;
-
 namespace VMelnalksnis.PaperlessDotNet.Documents;
 
 /// <summary>Paperless API client for working with documents.</summary>
@@ -46,7 +44,7 @@ public interface IDocumentClient
 	/// <returns>An enumerable which will asynchronously iterate over all available pages of documents.</returns>
 	IAsyncEnumerable<Document> Get(
 		Expression<Func<DocumentFilter, bool>> filter,
-		Expression<Func<Document, object>>? orderBy = null,
+		Expression<Func<Document, object?>>? orderBy = null,
 		CancellationToken cancellationToken = default);
 
 	/// <summary>Gets filtered documents.</summary>
@@ -57,7 +55,7 @@ public interface IDocumentClient
 	/// <returns>An enumerable which will asynchronously iterate over all available pages of documents.</returns>
 	IAsyncEnumerable<Document<TFields>> Get<TFields>(
 		Expression<Func<DocumentFilter, bool>> filter,
-		Expression<Func<Document, object>>? orderBy = null,
+		Expression<Func<Document, object?>>? orderBy = null,
 		CancellationToken cancellationToken = default);
 
 	/// <summary>Gets the document with the specified id.</summary>

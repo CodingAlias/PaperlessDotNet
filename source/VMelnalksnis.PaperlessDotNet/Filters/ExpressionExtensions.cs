@@ -13,6 +13,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 
 using VMelnalksnis.PaperlessDotNet.Documents;
+using VMelnalksnis.PaperlessDotNet.DocumentTypes;
 
 using static System.Linq.Expressions.ExpressionType;
 
@@ -27,14 +28,25 @@ public static class ExpressionExtensions
 	/// <returns>A URL formatted query string.</returns>
 	public static string GetQueryString(
 		this Expression<Func<DocumentFilter, bool>> filterExpression,
-		Expression<Func<Document, object>>? orderExpression = null)
+		Expression<Func<Document, object?>>? orderExpression = null)
+	{
+		return filterExpression.GetQueryStringCore(orderExpression);
+	}
+
+	/// <summary>Gets a query string for document types for the given expressions.</summary>
+	/// <param name="filterExpression">Expression for filtering the results.</param>
+	/// <param name="orderExpression">Expression for selecting the field by which to order the results.</param>
+	/// <returns>A URL formatted query string.</returns>
+	public static string GetQueryString(
+		this Expression<Func<DocumentTypeFilter, bool>> filterExpression,
+		Expression<Func<DocumentType, object?>>? orderExpression = null)
 	{
 		return filterExpression.GetQueryStringCore(orderExpression);
 	}
 
 	private static string GetQueryStringCore<TFilter, TOrder>(
 		this Expression<Func<TFilter, bool>> filterExpression,
-		Expression<Func<TOrder, object>>? orderExpression = null)
+		Expression<Func<TOrder, object?>>? orderExpression = null)
 	{
 		var parameters = filterExpression
 			.Body
@@ -44,6 +56,13 @@ public static class ExpressionExtensions
 		if (orderExpression is { Body: UnaryExpression { Operand: MemberExpression memberExpression } })
 		{
 			parameters = parameters.Append(new("ordering", memberExpression.GetOrderMemberName()));
+		}
+		else if (orderExpression is not null)
+		{
+			throw new ArgumentOutOfRangeException(
+				nameof(orderExpression),
+				orderExpression,
+				$"Order expression must be a {nameof(MemberExpression)}");
 		}
 
 		return string.Join("&", parameters.Select(pair => $"{pair.Key}={UrlEncoder.Default.Encode(pair.Value)}"));

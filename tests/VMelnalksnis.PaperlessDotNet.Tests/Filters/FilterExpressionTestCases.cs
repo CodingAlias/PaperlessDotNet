@@ -8,12 +8,13 @@ using System.Linq;
 using System.Linq.Expressions;
 
 using VMelnalksnis.PaperlessDotNet.Documents;
-using VMelnalksnis.PaperlessDotNet.Filters;
 
 namespace VMelnalksnis.PaperlessDotNet.Tests.Filters;
 
-public sealed class FilterExpressionTestCases : TheoryData<Expression<Func<DocumentFilter, bool>>,
-	Expression<Func<Document, object>>?, string>
+public sealed class FilterExpressionTestCases : TheoryData<
+	Expression<Func<DocumentFilter, bool>>,
+	Expression<Func<Document, object?>>?,
+	string>
 {
 	private static readonly int[] _ids = [5, 23];
 

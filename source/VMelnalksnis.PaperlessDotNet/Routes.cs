@@ -15,6 +15,7 @@ internal static class Routes
 	private const string _correspondents = "/api/correspondents/";
 	private const string _customFields = "/api/custom_fields/";
 	private const string _documents = "/api/documents/";
+	private const string _documentTypes = "/api/document_types/";
 	private const string _tags = "/api/tags/";
 	private const string _tasks = "/api/tasks/";
 
@@ -55,6 +56,15 @@ internal static class Routes
 		internal static Uri DownloadOriginalPreview(int id) => new($"{_documents}{id}/preview/?original=true", Relative);
 
 		internal static Uri DownloadThumbnail(int id) => new($"{_documents}{id}/thumb/", Relative);
+	}
+
+	internal static class DocumentTypes
+	{
+		internal static Uri Uri() => new($"{_documentTypes}", Relative);
+
+		internal static Uri Uri(string query) => new($"{_documentTypes}?{query}", Relative);
+
+		internal static Uri IdUri(int id) => new($"{_documentTypes}{id}/", Relative);
 	}
 
 	internal static class Tags
