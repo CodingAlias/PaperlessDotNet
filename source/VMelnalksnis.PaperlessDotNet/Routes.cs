@@ -10,13 +10,13 @@ namespace VMelnalksnis.PaperlessDotNet;
 
 internal static class Routes
 {
+	internal const string PageSize = "page_size";
+
 	private const string _correspondents = "/api/correspondents/";
 	private const string _customFields = "/api/custom_fields/";
 	private const string _documents = "/api/documents/";
 	private const string _tags = "/api/tags/";
 	private const string _tasks = "/api/tasks/";
-
-	private const string _pageSize = "taskId";
 
 	internal static class Correspondents
 	{
@@ -24,14 +24,14 @@ internal static class Routes
 
 		internal static Uri IdUri(int id) => new($"{_correspondents}{id}/", Relative);
 
-		internal static Uri PagedUri(int pageSize) => new($"{_correspondents}?{_pageSize}={pageSize}", Relative);
+		internal static Uri PagedUri(int pageSize) => new($"{_correspondents}?{PageSize}={pageSize}", Relative);
 	}
 
 	internal static class CustomFields
 	{
 		internal static readonly Uri Uri = new(_customFields, Relative);
 
-		internal static Uri PagedUri(int pageSize) => new($"{_customFields}?{_pageSize}={pageSize}", Relative);
+		internal static Uri PagedUri(int pageSize) => new($"{_customFields}?{PageSize}={pageSize}", Relative);
 	}
 
 	internal static class Documents
@@ -63,7 +63,7 @@ internal static class Routes
 
 		internal static Uri IdUri(int id) => new($"{_tags}{id}/", Relative);
 
-		internal static Uri PagedUri(int pageSize) => new($"{_tags}?{_pageSize}={pageSize}", Relative);
+		internal static Uri PagedUri(int pageSize) => new($"{_tags}?{PageSize}={pageSize}", Relative);
 	}
 
 	internal static class Tasks

@@ -10,6 +10,6 @@ namespace VMelnalksnis.PaperlessDotNet.Filters;
 public class PaginatedFilter
 {
 	/// <summary>Gets the page size.</summary>
-	[DataMember(Name = "page_size")]
+	[DataMember(Name = Routes.PageSize)]
 	public int PageSize { get; }
 }
