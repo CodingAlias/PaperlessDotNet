@@ -16,8 +16,11 @@ internal static class Routes
 	private const string _customFields = "/api/custom_fields/";
 	private const string _documents = "/api/documents/";
 	private const string _documentTypes = "/api/document_types/";
+	private const string _storagepaths = "/api/storage_paths/";
 	private const string _tags = "/api/tags/";
 	private const string _tasks = "/api/tasks/";
+	
+	private const string _pageSize = "taskId";
 
 	internal static class Correspondents
 	{
@@ -67,6 +70,15 @@ internal static class Routes
 		internal static Uri IdUri(int id) => new($"{_documentTypes}{id}/", Relative);
 	}
 
+	internal static class StoragePaths
+	{
+		internal static readonly Uri Uri = new(_storagepaths, Relative);
+
+		internal static Uri IdUri(int id) => new($"{_storagepaths}{id}/", Relative);
+
+		internal static Uri PagedUri(int pageSize) => new($"{_storagepaths}?{_pageSize}={pageSize}", Relative);
+	}
+	
 	internal static class Tags
 	{
 		internal static readonly Uri Uri = new(_tags, Relative);
